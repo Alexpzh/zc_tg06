@@ -113,6 +113,9 @@ async def send_tips(message: Message):
    tip = random.choice(tips)
    await message.answer(tip)
 
+@dp.message(F.text == "Личные финансы")
+async def finances(message: Message, state: FSMContext):
+   await state.set_state(FinancesForm.category1)
 @dp.message(FinancesForm.category1)
 async def finances(message: Message, state: FSMContext):
    await state.update_data(category1 = message.text)
