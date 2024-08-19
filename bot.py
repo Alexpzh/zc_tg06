@@ -90,17 +90,15 @@ async def exchange_rates(message: Message):
         if response.status_code != 200:
             await message.answer("Не удалось получить данные о курсе валют!")
             return
-        usd_to_rub = data['conversion_rates']['RUB']
+        rub_to_usd = data['conversion_rates']['RUB']
         eur_to_usd = data['conversion_rates']['EUR']
 
-        euro_to_rub = eur_to_usd * usd_to_rub
+        rub_to_euro = rub_to_usd / eur_to_usd
 
-        await message.answer(f"1 USD - {usd_to_rub:.4f}  RUB\n"
-                         f"1 EUR - {euro_to_rub:.4f}  RUB")
+        await message.answer(f"1 USD - {rub_to_usd:.4f}  RUB\n"
+                         f"1 EUR - {rub_to_euro:.4f}  RUB")
     except Exception as e:
         await message.answer(f"Не удалось получить данные о курсе валют: {e}")
-
-    #await FinancesForm.next()
 
 
 @dp.message(F.text == "Советы по экономии")
