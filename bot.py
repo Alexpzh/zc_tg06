@@ -83,7 +83,7 @@ async def registration(message: Message):
 
 @dp.message(F.text == "Курс валют")
 async def exchange_rates(message: Message):
-    url = "< https://v6.exchangerate-api.com/v6/e08d34fa528bb51538e60c72/latest/USD>"
+    url = "https://v6.exchangerate-api.com/v6/e08d34fa528bb51538e60c72/latest/USD"
     try:
         response = requests.get(url)
         data = response.json()
@@ -116,6 +116,8 @@ async def send_tips(message: Message):
 @dp.message(F.text == "Личные финансы")
 async def finances(message: Message, state: FSMContext):
    await state.set_state(FinancesForm.category1)
+   await message.reply("Введите первую категорию расходов:")
+
 @dp.message(FinancesForm.category1)
 async def finances(message: Message, state: FSMContext):
    await state.update_data(category1 = message.text)
@@ -152,7 +154,7 @@ async def finances(message: Message, state: FSMContext):
 @dp.message(FinancesForm.expenses3)
 async def finances(message: Message, state: FSMContext):
    data = await state.get_data()
-   telegarm_id = message.from_user.id
+   telegram_id = message.from_user.id
    cursor.execute('''UPDATE users SET category1 = ?, expenses1 = ?, category2 = ?, expenses2 = ?, category3 = ?, expenses3 = ? WHERE telegram_id = ?''',
                   (data['category1'], data['expenses1'], data['category2'], data['expenses2'], data['category3'], float(message.text), telegram_id))
    conn.commit()
