@@ -81,7 +81,7 @@ async def registration(message: Message):
 
 @dp.message(F.text == "Курс валют")
 async def exchange_rates(message: Message):
-    url = "<https://v6.exchangerate-api.com/v6/09edf8b2bb246e1f801cbfba/latest/USD>"
+    url = "< https://v6.exchangerate-api.com/v6/e08d34fa528bb51538e60c72/latest/USD>"
     try:
         response = requests.get(url)
 
